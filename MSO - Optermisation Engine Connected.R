@@ -112,13 +112,15 @@ best_index <- which.max(sapply(net_reach_values_list, function(result) result$ne
 # Access the corresponding result
 best_result <- net_reach_values_list[[best_index]]
 
+# Create a data frame from the first column of abc_curves and add it to channel_allocation_opt
+channel_allocation_opt <- data.frame(Channel = abc_curves$Key, best_result$opt_budget_split)
+
+# Assign channel_allocation_opt to the global environment
+assign("channel_allocation_opt", channel_allocation_opt, envir = .GlobalEnv)
+
 # Display the best result
 cat("Best Random Allocation:", best_result$random_allocation, "\n")
 cat("Best Optimized Budget Value:", best_result$opt_budget_value, "\n")
 cat("Best Optimized Budget Split:", best_result$opt_budget_split, "\n")
 cat("Maximum Net Reach:", best_result$net_reach_opt, "\n")
 cat("Cost Per Reach Point:", best_result$cost_per_reach_opt, "\n")
-
-
-# Create a data frame from the first column of abc_curves and add it to channel_allocation_opt
-channel_allocation_opt <- data.frame(Channel = abc_curves$Key, best_result$opt_budget_split)
