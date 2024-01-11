@@ -2,12 +2,12 @@ library(Rsolnp)
 
 #rm(list = c("abc_curves", "best_result", "net_reach_value_list","gosolpn_results_list"))
 
-stored_abc_values <- data.frame(
-  Key = c("Curve 1", "Curve 2", "Curve 3"),
-  A = c(0.56423844, 0.33380633, 0.160560345),
-  B = c(13604.54, 79835.86, 39647.51),
-  C = c(-0.837480947, -0.911519771, -0.837480947)
-)
+# stored_abc_values <- data.frame(
+#  Key = c("Curve 1", "Curve 2", "Curve 3"),
+#  A = c(0.56423844, 0.33380633, 0.160560345),
+#  B = c(13604.54, 79835.86, 39647.51),
+#  C = c(-0.837480947, -0.911519771, -0.837480947)
+#)
 
 # Import ABC Curves For Channels
 abc_curves <- stored_abc_values
