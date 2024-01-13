@@ -106,7 +106,7 @@ best_result <- net_reach_values_list[[best_index]]
 
 # Create a data frame from the first column of abc_curves and add it to channel_allocation_opt
 #channel_allocation_opt <- data.frame(Channel = abc_curves$Key, best_result$opt_budget_split)
-channel_allocation_opt <- data.frame(Budget = best_result$opt_budget_split)
+channel_allocation_opt <- data.frame(Budget = as.numeric(best_result$opt_budget_split))
 
 # Assign channel_allocation_opt to the global environment
 assign("channel_allocation_opt", channel_allocation_opt, envir = .GlobalEnv)
