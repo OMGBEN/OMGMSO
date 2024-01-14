@@ -2,18 +2,12 @@ library(Rsolnp)
 
 #rm(list = c("abc_curves", "best_result", "net_reach_value_list","gosolpn_results_list"))
 
-# Import ABC Curves For Channels
-abc_curves <- data.frame(
-  Key = c("Curve 1", "Curve 2", "Curve 3"),
-  A = c(0.56423844, 0.33380633, 0.160560345),
-  B = c(13604.54, 79835.86, 39647.51),
-  C = c(-0.837480947, -0.911519771, -0.837480947)
-)
 
-reactive_budget <- 1000000
+
+
 
 # Import ABC Curves For Channels
-#abc_curves <- stored_abc_values()
+abc_curves <- stored_abc_values()
 
 # Define the equality constraint function
 eqn3 <- function(x) { 
@@ -45,7 +39,7 @@ net_reach_out_fn <- function(x, abc_curves) {
 
 # Set parameters
 ntry <- 10  
-budget_overall <- 1000000
+budget_overall <- reactive_budget()
 working_channels <- nrow(abc_curves)
 min_budget <- rep(0, nrow(abc_curves))
 max_budget <- rep(budget_overall, nrow(abc_curves))
