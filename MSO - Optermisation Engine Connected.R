@@ -7,7 +7,7 @@ library(Rsolnp)
 
 
 # Import ABC Curves For Channels
-abc_curves <- stored_abc_values()
+abc_curves <- stored_abc_values
 
 # Define the equality constraint function
 eqn3 <- function(x) { 
