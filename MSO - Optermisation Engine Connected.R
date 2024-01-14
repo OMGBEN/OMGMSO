@@ -1,11 +1,5 @@
 library(Rsolnp)
 
-#rm(list = c("abc_curves", "best_result", "net_reach_value_list","gosolpn_results_list"))
-
-
-
-
-
 # Import ABC Curves For Channels
 abc_curves <- stored_abc_values
 
