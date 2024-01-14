@@ -1,5 +1,6 @@
 library(Rsolnp)
 
+
 # Import ABC Curves For Channels
 abc_curves <- stored_abc_values
 
@@ -33,7 +34,7 @@ net_reach_out_fn <- function(x, abc_curves) {
 
 # Set parameters
 ntry <- 10  
-budget_overall <- reactive_budget()
+budget_overall <- 1000000
 working_channels <- nrow(abc_curves)
 min_budget <- rep(0, nrow(abc_curves))
 max_budget <- rep(budget_overall, nrow(abc_curves))
@@ -84,6 +85,7 @@ net_reach_values_list <- mapply(
     cost_per_reach_opt <- budget_overall / net_reach_opt
     
     return(list(
+      random_allocation = random_allocation,
       opt_budget_value = round(opt_budget_value, 2),
       opt_budget_split = round(opt_budget_split, 4),
       net_reach_opt = round(net_reach_opt, 4),
@@ -101,3 +103,17 @@ best_index <- which.max(sapply(net_reach_values_list, function(result) result$ne
 
 # Access the corresponding result
 best_result <- net_reach_values_list[[best_index]]
+
+# Create a data frame from the first column of abc_curves and add it to channel_allocation_opt
+#channel_allocation_opt <- data.frame(Channel = abc_curves$Key, best_result$opt_budget_split)
+channel_allocation_opt <- data.frame(Budget = as.numeric(best_result$opt_budget_split))
+
+# Assign channel_allocation_opt to the global environment
+assign("channel_allocation_opt", channel_allocation_opt, envir = .GlobalEnv)
+
+# Display the best result
+cat("Best Random Allocation:", best_result$random_allocation, "\n")
+cat("Best Optimized Budget Value:", best_result$opt_budget_value, "\n")
+cat("Best Optimized Budget Split:", best_result$opt_budget_split, "\n")
+cat("Maximum Net Reach:", best_result$net_reach_opt, "\n")
+cat("Cost Per Reach Point:", best_result$cost_per_reach_opt, "\n")
