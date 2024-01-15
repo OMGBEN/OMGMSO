@@ -107,5 +107,5 @@ best_result <- net_reach_values_list[[best_index]]
 # Extract opt_budget_split values from net_reach_values_list
 budget_split_opt <- data.frame(opt_budget_split = best_result$opt_budget_split)
 
-
+print(budget_split_opt)
 
