@@ -116,7 +116,7 @@ budget_split_opt <- data.frame(opt_budget_split = best_result$opt_budget_split)
 budget_budget_opt <- data.frame(Budget = best_result$opt_budget_split * budget_overall)
 
 # ABC Reach calculation using the best result
-channel_reach_opt <- paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, budget_budget_opt$Budget) * 100, 2), "%")
+channel_reach_opt <- data.frame(Reach = paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, budget_budget_opt$Budget) * 100, 2), "%"))
 
 
 # Print the results
