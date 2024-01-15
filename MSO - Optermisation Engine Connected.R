@@ -70,7 +70,7 @@ gosolnp_results_list <- lapply(random_allocations_list, function(random_allocati
 })
 
 # Step 3: Extract the optimized parameter values and calculate additional metrics
-net_reach_values_list <- mapply(
+opt_results <- do.call(rbind, mapply(
   function(random_allocation, sol3) {
     # Extract the optimized parameter values
     opt_budget_value <- sol3$pars
@@ -84,7 +84,7 @@ net_reach_values_list <- mapply(
     # Calculate the cost per reach point
     cost_per_reach_opt <- budget_overall / net_reach_opt
     
-    return(list(
+    return(data.frame(
       random_allocation = random_allocation,
       opt_budget_value = round(opt_budget_value, 2),
       opt_budget_split = round(opt_budget_split, 4),
@@ -95,16 +95,13 @@ net_reach_values_list <- mapply(
   random_allocations_list,
   gosolnp_results_list,
   SIMPLIFY = FALSE
-)
-
+))
 
 # Find the index of the row with the highest net_reach_opt
-best_index <- which.max(sapply(net_reach_values_list, function(result) result$net_reach_opt))
+best_index <- which.max(opt_results$net_reach_opt)
 
 # Access the corresponding result
-best_result <- net_reach_values_list[[best_index]]
-
-
+best_result <- opt_results[best_index, ]
 
 # Display the best result
 cat("Best Random Allocation:", best_result$random_allocation, "\n")
