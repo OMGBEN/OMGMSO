@@ -87,16 +87,13 @@ net_reach_values_list <- mapply(
     # Calculate the cost per reach point
     cost_per_reach_opt <- budget_overall / net_reach_opt
     
-    # Create a data frame with the results
-    result_df <- data.frame(
+    return(list(
       random_allocation = random_allocation,
       opt_budget_value = round(opt_budget_value, 2),
       opt_budget_split = round(opt_budget_split, 4),
       net_reach_opt = round(net_reach_opt, 4),
       cost_per_reach_opt = cost_per_reach_opt
-    )
-    
-    return(result_df)
+    ))
   },
   random_allocations_list,
   gosolnp_results_list,
@@ -115,5 +112,5 @@ budget_split_opt <<- data.frame(opt_budget_split = best_result$opt_budget_split)
 
 print(budget_split_opt)
 
-print(best_index)
+print(best_result$net_reach_opt)
 
