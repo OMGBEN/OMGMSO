@@ -2,10 +2,15 @@
 library(Rsolnp)
 
 
-
-
 # Import ABC Curves For Channels
 abc_curves <- stored_abc_values
+
+# ABC Reach Function
+abc_formula <- function(A, B, C, budget) {
+  result <- A / (1 + B * (budget^C))
+  return(result)
+}
+
 
 # Define the equality constraint function
 eqn3 <- function(x) { 
@@ -24,19 +29,14 @@ net_reach_fn <- function(x) {
   return(objective_value)
 }
 
-
 # Net reach output function
 net_reach_out_fn <- function(x, abc_curves) {
   net_reach_output <- abc_curves$A / (1 + abc_curves$B * (x^abc_curves$C))
   return(net_reach_output)
 }
 
-
-
-
-
 # Set parameters
-ntry <- 10  
+ntry <- 10 
 budget_overall <- 100000
 working_channels <- nrow(abc_curves)
 min_budget <- rep(0, nrow(abc_curves))
@@ -87,19 +87,21 @@ net_reach_values_list <- mapply(
     # Calculate the cost per reach point
     cost_per_reach_opt <- budget_overall / net_reach_opt
     
-    return(list(
+    # Create a list with the results
+    result_list <- list(
       random_allocation = random_allocation,
       opt_budget_value = round(opt_budget_value, 2),
       opt_budget_split = round(opt_budget_split, 4),
       net_reach_opt = round(net_reach_opt, 4),
       cost_per_reach_opt = cost_per_reach_opt
-    ))
+    )
+    
+    return(result_list)
   },
   random_allocations_list,
   gosolnp_results_list,
   SIMPLIFY = FALSE
 )
-
 
 # Find the index of the row with the highest net_reach_opt
 best_index <- which.max(sapply(net_reach_values_list, function(result) result$net_reach_opt))
@@ -108,9 +110,16 @@ best_index <- which.max(sapply(net_reach_values_list, function(result) result$ne
 best_result <- net_reach_values_list[[best_index]]
 
 # Extract opt_budget_split values from net_reach_values_list
-budget_split_opt <<- data.frame(opt_budget_split = best_result$opt_budget_split)
+budget_split_opt <- data.frame(opt_budget_split = best_result$opt_budget_split)
 
+# Creating budget values 
+budget_budget_opt <- data.frame(Budget = best_result$opt_budget_split * budget_overall)
+
+# ABC Reach calculation using the best result
+channel_reach_opt <- paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, budget_budget_opt$Budget) * 100, 2), "%")
+
+
+# Print the results
 print(budget_split_opt)
-
 print(best_result$net_reach_opt)
-
+print(channel_reach_opt)
