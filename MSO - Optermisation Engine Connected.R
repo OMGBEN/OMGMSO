@@ -1,18 +1,11 @@
 # Load the Rsolnp package
 library(Rsolnp)
 
-# Import ABC Curves For Channels
-abc_curves <- data.frame(
-  Key = c("Curve 1", "Curve 2", "Curve 3"),
-  A = c(0.56423844, 0.33380633, 0.160560345),
-  B = c(13604.54, 79835.86, 39647.51),
-  C = c(-0.837480947, -0.911519771, -0.837480947)
-)
 
 
 
 # Import ABC Curves For Channels
-#abc_curves <- stored_abc_values
+abc_curves <- stored_abc_values
 
 # Define the equality constraint function
 eqn3 <- function(x) { 
