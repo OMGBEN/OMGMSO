@@ -115,3 +115,5 @@ budget_split_opt <<- data.frame(opt_budget_split = best_result$opt_budget_split)
 
 print(budget_split_opt)
 
+print(best_index)
+
