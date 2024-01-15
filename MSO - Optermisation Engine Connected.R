@@ -2,7 +2,17 @@
 library(Rsolnp)
 
 # Import ABC Curves For Channels
-abc_curves <- stored_abc_values
+abc_curves <- data.frame(
+  Key = c("Curve 1", "Curve 2", "Curve 3"),
+  A = c(0.56423844, 0.33380633, 0.160560345),
+  B = c(13604.54, 79835.86, 39647.51),
+  C = c(-0.837480947, -0.911519771, -0.837480947)
+)
+
+
+
+# Import ABC Curves For Channels
+#abc_curves <- stored_abc_values
 
 # Define the equality constraint function
 eqn3 <- function(x) { 
@@ -84,13 +94,16 @@ net_reach_values_list <- mapply(
     # Calculate the cost per reach point
     cost_per_reach_opt <- budget_overall / net_reach_opt
     
-    return(list(
+    # Create a data frame with the results
+    result_df <- data.frame(
       random_allocation = random_allocation,
       opt_budget_value = round(opt_budget_value, 2),
       opt_budget_split = round(opt_budget_split, 4),
       net_reach_opt = round(net_reach_opt, 4),
       cost_per_reach_opt = cost_per_reach_opt
-    ))
+    )
+    
+    return(result_df)
   },
   random_allocations_list,
   gosolnp_results_list,
