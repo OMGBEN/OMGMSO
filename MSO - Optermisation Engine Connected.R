@@ -1,5 +1,5 @@
+# Load the Rsolnp package
 library(Rsolnp)
-
 
 # Import ABC Curves For Channels
 abc_curves <- stored_abc_values
@@ -70,7 +70,7 @@ gosolnp_results_list <- lapply(random_allocations_list, function(random_allocati
 })
 
 # Step 3: Extract the optimized parameter values and calculate additional metrics
-opt_results <- do.call(rbind, mapply(
+net_reach_values_list <- mapply(
   function(random_allocation, sol3) {
     # Extract the optimized parameter values
     opt_budget_value <- sol3$pars
@@ -84,7 +84,7 @@ opt_results <- do.call(rbind, mapply(
     # Calculate the cost per reach point
     cost_per_reach_opt <- budget_overall / net_reach_opt
     
-    return(data.frame(
+    return(list(
       random_allocation = random_allocation,
       opt_budget_value = round(opt_budget_value, 2),
       opt_budget_split = round(opt_budget_split, 4),
@@ -95,17 +95,17 @@ opt_results <- do.call(rbind, mapply(
   random_allocations_list,
   gosolnp_results_list,
   SIMPLIFY = FALSE
-))
+)
+
 
 # Find the index of the row with the highest net_reach_opt
-best_index <- which.max(opt_results$net_reach_opt)
+best_index <- which.max(sapply(net_reach_values_list, function(result) result$net_reach_opt))
 
 # Access the corresponding result
-best_result <- opt_results[best_index, ]
+best_result <- net_reach_values_list[[best_index]]
 
-# Display the best result
-cat("Best Random Allocation:", best_result$random_allocation, "\n")
-cat("Best Optimized Budget Value:", best_result$opt_budget_value, "\n")
-cat("Best Optimized Budget Split:", best_result$opt_budget_split, "\n")
-cat("Maximum Net Reach:", best_result$net_reach_opt, "\n")
-cat("Cost Per Reach Point:", best_result$cost_per_reach_opt, "\n")
+# Extract opt_budget_split values from net_reach_values_list
+budget_split_opt <- data.frame(opt_budget_split = best_result$opt_budget_split)
+
+
+
