@@ -68,21 +68,14 @@ gosolnp_results_list <- lapply(random_allocations_list, function(random_allocati
   )
 
   # Step 3: Sourcing the best results & preparing output
- # ABC Reach calculation using the best result
+  
+  # ABC Reach calculation using the best result
   budget_split_opt <- data.frame(opt_budget_split = sol3$pars)
   opt_budget_value <- round(sol3$pars, 2)
   channel_reach_opt <- data.frame(Reach = paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2), "%"))
-  
-  # Create a data frame for formatted opt_budget_value
-  opt_budget_value_fm <- data.frame(
-    opt_budget_value = formattable::currency(
-      opt_budget_value,
-      symbol = "$",
-      digits = 0,
-      format = "f",
-      big.mark = ","
-    )
-  )
+  opt_budget_value_fm <- data.frame(Budget = paste0('$', format(round(opt_budget_value, 2), big.mark = ",")))  
+
+
   
   # Create a list with the results
   result_list <- list(
