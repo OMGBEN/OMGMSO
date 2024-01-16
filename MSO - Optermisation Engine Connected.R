@@ -74,7 +74,7 @@ budget_split_opt <- sol3$pars / budget_overall
 opt_budget_value <- round(sol3$pars, 2)
 channel_reach_opt <- data.frame(Reach = paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2), "%"))
 channel_reach_value <- data.frame(Reach = round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2))
-opt_budget_value_fm <- data.frame(Budget = paste0('$', format(round(opt_budget_value, 2), big.mark = ",")))
+opt_budget_value_fm <- data.frame(Budget = paste0('$', format(round(opt_budget_value, 0), big.mark = ",")))
 opt_budget_split_fm <- data.frame(Split = paste0(round(budget_split_opt * 100, 2), "%"))
 opt_budget_value_out <- data.frame(Budget = opt_budget_value)
 
