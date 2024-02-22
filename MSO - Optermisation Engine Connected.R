@@ -2,11 +2,11 @@
 library(Rsolnp)
 
 # Import ABC Curves For Channels
- abc_curves <- stored_abc_values
- 
- # Overall Budget 
- budget_overall <- reactive_budget_overall()
- 
+abc_curves <- stored_abc_values
+
+# Overall Budget 
+budget_overall <- reactive_budget_overall()
+
 # Define the generate_scenarios function
 generate_scenarios <- function(num_scenarios, num_channels, budget_overall) {
   scenarios <- replicate(num_scenarios, {
@@ -50,14 +50,15 @@ net_reach_out_fn <- function(x, abc_curves) {
 }
 
 # Set parameters
-ntry <- 10 
+ntry <- 100 
 budget_overall <- reactive_budget_overall()
 working_channels <- nrow(abc_curves)
 min_budget <- rep(0, nrow(abc_curves))
 max_budget <- rep(budget_overall, nrow(abc_curves))
 
 # Step 1: Generate random allocations using the generate_scenarios function
-random_allocations_list <- generate_scenarios(ntry, length(abc_curves[[1]]), budget_overall)
+random_allocations_list <- rep(list(lapply(budget_overall / nrow(abc_curves), rep, nrow(abc_curves))[[1]]), ntry)
+
 
 # Step 2: Apply optimization with gosolnp for each random allocation
 gosolnp_results_list <- lapply(random_allocations_list, function(random_allocation) {
