@@ -6,7 +6,7 @@ library(Rsolnp)
 
 
 # Define the generate_scenarios function
-generate_scenarios <- function(num_scenarios, num_channels, reactive_budget_overall {
+generate_scenarios <- function(num_scenarios, num_channels, reactive_budget_overall) {
   scenarios <- replicate(num_scenarios, {
     allocations <- numeric(num_channels)
     exponent <- sample(c(1, 1.5, 2, 2.5, 3, 3.5, 4), 1)  # Randomly select exponent
