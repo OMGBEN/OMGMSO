@@ -2,7 +2,21 @@
 library(Rsolnp)
 
 # Import ABC Curves For Channels
-abc_curves <- stored_abc_values
+ abc_curves <- stored_abc_values
+
+
+# Define the generate_scenarios function
+generate_scenarios <- function(num_scenarios, num_channels, reactive_budget_overall {
+  scenarios <- replicate(num_scenarios, {
+    allocations <- numeric(num_channels)
+    exponent <- sample(c(1, 1.5, 2, 2.5, 3, 3.5, 4), 1)  # Randomly select exponent
+    weights <- runif(num_channels, min = 0, max = 1)^exponent  # Apply non-linear transformation
+    weights <- weights / sum(weights)  # Normalize weights
+    allocations <- weights * reactive_budget_overall()   # Convert to actual budget values
+    allocations
+  }, simplify = FALSE)
+  return(scenarios)
+}
 
 # ABC Reach Function
 abc_formula <- function(A, B, C, budget) {
@@ -34,25 +48,14 @@ net_reach_out_fn <- function(x, abc_curves) {
 }
 
 # Set parameters
-ntry <- 10 
+ntry <- 100 
 budget_overall <- reactive_budget_overall()
 working_channels <- nrow(abc_curves)
 min_budget <- rep(0, nrow(abc_curves))
 max_budget <- rep(budget_overall, nrow(abc_curves))
 
-# Step 1: Generate random allocations
-random_allocations_list <- lapply(1:ntry, function(x) {
-  # Generate random values for each channel within the specified bounds
-  random_allocation <- runif(
-    n = nrow(abc_curves),
-    min = min_budget, max = max_budget
-  )
-  
-  # Normalize the allocation to ensure it sums up to the total budget
-  random_allocation <- random_allocation / sum(random_allocation) * budget_overall
-  
-  return(random_allocation)
-})
+# Step 1: Generate random allocations using the generate_scenarios function
+random_allocations_list <- generate_scenarios(ntry, length(abc_curves[[1]]), budget_overall)
 
 # Step 2: Apply optimization with gosolnp for each random allocation
 gosolnp_results_list <- lapply(random_allocations_list, function(random_allocation) {
@@ -66,33 +69,31 @@ gosolnp_results_list <- lapply(random_allocations_list, function(random_allocati
     UB = max_budget,
     control = list(itermax = 2000, tol = 1e-2)   # Increase itermax
   )
-
-    # Step 3: Sourcing the best results & preparing output
   
-# ABC Reach calculation using the best result
-budget_split_opt <- sol3$pars / budget_overall
-opt_budget_value <- round(sol3$pars, 2)
-channel_reach_opt <- data.frame(Reach = paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2), "%"))
-channel_reach_value <- data.frame(Reach = round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2))
-opt_budget_value_fm <- data.frame(Budget = paste0('$', format(round(opt_budget_value, 0), big.mark = ",")))
-opt_budget_split_fm <- data.frame(Split = paste0(round(budget_split_opt * 100, 2), "%"))
-opt_budget_value_out <- data.frame(Budget = opt_budget_value)
-
-# Create a list with the results
-result_list <- list(
-  random_allocation = random_allocation,
-  opt_budget_value = opt_budget_value,
-  opt_budget_value_fm = opt_budget_value_fm,
-  opt_budget_split_fm = opt_budget_split_fm,
-  opt_budget_value_out = opt_budget_value_out,
-  opt_budget_split = round(opt_budget_value / budget_overall, 4),
-  net_reach_opt = round(sum(net_reach_out_fn(opt_budget_value, abc_curves)), 4),
-  cost_per_reach_opt = budget_overall / sum(net_reach_out_fn(opt_budget_value, abc_curves)),
-  channel_reach_opt = channel_reach_opt,
-  channel_reach_value = channel_reach_value
-)
-
+  # Step 3: Sourcing the best results & preparing output
   
+  # ABC Reach calculation using the best result
+  budget_split_opt <- sol3$pars / budget_overall
+  opt_budget_value <- round(sol3$pars, 2)
+  channel_reach_opt <- data.frame(Reach = paste0(round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2), "%"))
+  channel_reach_value <- data.frame(Reach = round(abc_formula(abc_curves$A, abc_curves$B, abc_curves$C, opt_budget_value) * 100, 2))
+  opt_budget_value_fm <- data.frame(Budget = paste0('$', format(round(opt_budget_value, 0), big.mark = ",")))
+  opt_budget_split_fm <- data.frame(Split = paste0(round(budget_split_opt * 100, 2), "%"))
+  opt_budget_value_out <- data.frame(Budget = opt_budget_value)
+  
+  # Create a list with the results
+  result_list <- list(
+    random_allocation = random_allocation,
+    opt_budget_value = opt_budget_value,
+    opt_budget_value_fm = opt_budget_value_fm,
+    opt_budget_split_fm = opt_budget_split_fm,
+    opt_budget_value_out = opt_budget_value_out,
+    opt_budget_split = round(opt_budget_value / budget_overall, 4),
+    net_reach_opt = round(sum(net_reach_out_fn(opt_budget_value, abc_curves)), 4),
+    cost_per_reach_opt = budget_overall / sum(net_reach_out_fn(opt_budget_value, abc_curves)),
+    channel_reach_opt = channel_reach_opt,
+    channel_reach_value = channel_reach_value
+  )
   
   return(result_list)
 })
@@ -105,3 +106,4 @@ best_result <- gosolnp_results_list[[best_index]]
 
 # Print the results
 print(best_result)
+
