@@ -3,16 +3,18 @@ library(Rsolnp)
 
 # Import ABC Curves For Channels
  abc_curves <- stored_abc_values
-
-
+ 
+ # Overall Budget 
+ budget_overall <- reactive_budget_overall()
+ 
 # Define the generate_scenarios function
-generate_scenarios <- function(num_scenarios, num_channels, reactive_budget_overall) {
+generate_scenarios <- function(num_scenarios, num_channels, budget_overall) {
   scenarios <- replicate(num_scenarios, {
     allocations <- numeric(num_channels)
     exponent <- sample(c(1, 1.5, 2, 2.5, 3, 3.5, 4), 1)  # Randomly select exponent
     weights <- runif(num_channels, min = 0, max = 1)^exponent  # Apply non-linear transformation
     weights <- weights / sum(weights)  # Normalize weights
-    allocations <- weights * reactive_budget_overall()   # Convert to actual budget values
+    allocations <- weights * budget_overall   # Convert to actual budget values
     allocations
   }, simplify = FALSE)
   return(scenarios)
@@ -106,4 +108,3 @@ best_result <- gosolnp_results_list[[best_index]]
 
 # Print the results
 print(best_result)
-
