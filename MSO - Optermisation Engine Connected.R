@@ -38,7 +38,7 @@ net_reach_out_fn <- function(x, abc_curves) {
 }
 
 # Set parameters
-ntry <- 10
+ntry <- 100
 budget_overall <- reactive_budget_overall()
 working_channels <- nrow(abc_curves)
 min_budget <- rep(0, nrow(abc_curves))
