@@ -77,7 +77,9 @@ afSeasonality<-matrix(afSeasonality,ncol=length(afSeasonality))
 
 #Budget <- as.numeric(as.character(POST$TotalBudget))
 
-Budget <- c(as.numeric(1000000))
+#Budget <- c(as.numeric(1000000))
+
+Budget <- global_budget()
 
 n <- Budget/10^max(min(OrderOfMagnitude(Budget)-4,OrderOfMagnitude(min(afInputsMax))-1),1)
 
