@@ -101,12 +101,6 @@ spend <- apply(cbind(spend,minSpend),1,max)
 spend <- OptimizerMO(spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n)
 
 
-# Added to code BL
-mo_optium_output <- data.frame(
-  Platform = Media,
-  Optimum_Spend = spend
-)
-
 
 spend <- data.frame(spend)
 rownames(spend) <- Media
