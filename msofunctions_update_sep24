@@ -38,11 +38,11 @@ return(output)
 
 
 
-CreateSRCurveValues <- function(a1,b1,c1,cpp,budget,stepsize) {
+CreateSRCurveValues <- function(a1,b1,c1,cpp,budget,stepsize,MaxReach) {
 
 x<-seq(0,budget,stepsize)
 
-output<-a1/(1+b1*x^c1)
+output<-min(a1/(1+b1*x^c1),MaxReach)
 return(output)
 
 }
@@ -99,11 +99,11 @@ OptimizerMO <- function (spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,
 
 if (OptimizeSalesRevenue) {
 
-curves <- CreateSRCurveValues(Parameters[1,1],Parameters[2,1],Parameters[3,1],CPP[1,1],Budget,stepsize)
+curves <- CreateSRCurveValues(Parameters[1,1],Parameters[2,1],Parameters[3,1],CPP[1,1],Budget,stepsize,MaxReach)
 
 for (i in 1:length(spend)){
 
-curvetemp <- CreateSRCurveValues(Parameters[1,i],Parameters[2,i],Parameters[3,i],CPP[1,i],Budget,stepsize)
+curvetemp <- CreateSRCurveValues(Parameters[1,i],Parameters[2,i],Parameters[3,i],CPP[1,i],Budget,stepsize,MaxReach)
 
 curves <- cbind(curves,curvetemp)
 
