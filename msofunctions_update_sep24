@@ -92,35 +92,36 @@ return(OoM)
 
 ### Middle-out optimization routine. It guesses an equal budget split across media channels and adjusts from there.
 
-OptimizerMO <- function (spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n, MaxReach) {
+OptimizerMO <- function (spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n,MaxReach) {
 
 
 ### Determine ROI curves
 
 if (OptimizeSalesRevenue) {
 
-  # Create the first curve outside the loop
-  curves <- CreateSRCurveValues(Parameters[1,1], Parameters[2,1], Parameters[3,1], CPP[1,1], Budget, stepsize, MaxReach[1,1])
+curves <- CreateSRCurveValues(Parameters[1,1],Parameters[2,1],Parameters[3,1],CPP[1,1],Budget,stepsize,MaxReach[1,1])
 
-  # Start the loop from i = 2 to avoid duplicating the first curve
-  for (i in 2:length(spend)) {
-    curvetemp <- CreateSRCurveValues(Parameters[1,i], Parameters[2,i], Parameters[3,i], CPP[1,i], Budget, stepsize, MaxReach[1,i])
-    curves <- cbind(curves, curvetemp)
-    rm(curvetemp)
-  }
+for (i in 1:length(spend)){
 
+curvetemp <- CreateSRCurveValues(Parameters[1,i],Parameters[2,i],Parameters[3,i],CPP[1,i],Budget,stepsize,MaxReach[1,i])
 
-} else {
+curves <- cbind(curves,curvetemp)
 
-  # Create the first curve outside the loop
-  curves <- CreateCurveValues(Parameters[1,1], Parameters[2,1], Parameters[3,1], CPP[1,1], Budget, stepsize)
+rm(curvetemp)
 
-  # Start the loop from i = 2 to avoid duplicating the first curve
-  for (i in 2:length(spend)) {
-    curvetemp <- CreateCurveValues(Parameters[1,i], Parameters[2,i], Parameters[3,i], CPP[1,i], Budget, stepsize)
-    curves <- cbind(curves, curvetemp)
-    rm(curvetemp)
-  }
+} } else {
+
+curves <- CreateCurveValues(Parameters[1,1],Parameters[2,1],Parameters[3,1],CPP[1,1],Budget,stepsize)
+
+for (i in 1:length(spend)){
+
+curvetemp <- CreateCurveValues(Parameters[1,i],Parameters[2,i],Parameters[3,i],CPP[1,i],Budget,stepsize)
+
+curves <- cbind(curves,curvetemp)
+
+rm(curvetemp)
+
+} 
 
 }
 
