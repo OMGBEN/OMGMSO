@@ -50,6 +50,20 @@ afInputsMin<-as.numeric(afInputsMin)
 afInputsMax<-unlist(strsplit(as.character(POST$InputsMax),","))
 afInputsMax<-as.numeric(afInputsMax)
 
+
+
+
+
+# NEW SECTION ADDING IN MAX REACH INPUT
+MaxReach <-unlist(strsplit(as.character(POST$MaxReach),","))
+MaxReach <-as.numeric(MaxReach)
+
+
+
+
+
+
+
 afInputsMedia<-rep(0,length(afInputsInvestment))
 
 afInputs8<-rep(0,length(afInputsInvestment))
@@ -97,8 +111,9 @@ spend <- apply(cbind(spend,minSpend),1,max)
 
 
 
+# Update Here - Added MaxReach
 
-spend <- OptimizerMO(spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n)
+spend <- OptimizerMO(spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n,MaxReach)
 
 
 
