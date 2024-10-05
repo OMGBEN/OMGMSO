@@ -92,7 +92,7 @@ return(OoM)
 
 ### Middle-out optimization routine. It guesses an equal budget split across media channels and adjusts from there.
 
-OptimizerMO <- function (spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n) {
+OptimizerMO <- function (spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,OptimizeSalesRevenue,n, MaxReach) {
 
 
 ### Determine ROI curves
