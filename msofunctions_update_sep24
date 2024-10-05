@@ -42,7 +42,7 @@ CreateSRCurveValues <- function(a1,b1,c1,cpp,budget,stepsize,MaxReach) {
 
 x<-seq(0,budget,stepsize)
 
-output<-min(a1/(1+b1*x^c1),MaxReach)
+output<-pmin(a1/(1+b1*x^c1),MaxReach)
 return(output)
 
 }
