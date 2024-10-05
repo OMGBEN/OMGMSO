@@ -99,11 +99,11 @@ OptimizerMO <- function (spend,minSpend,maxSpend,stepsize,Budget,Parameters,CPP,
 
 if (OptimizeSalesRevenue) {
 
-curves <- CreateSRCurveValues(Parameters[1,1],Parameters[2,1],Parameters[3,1],CPP[1,1],Budget,stepsize,MaxReach[1,1])
+curves <- CreateSRCurveValues(Parameters[1,1],Parameters[2,1],Parameters[3,1],CPP[1,1],Budget,stepsize,MaxReach[1])
 
 for (i in 1:length(spend)){
 
-curvetemp <- CreateSRCurveValues(Parameters[1,i],Parameters[2,i],Parameters[3,i],CPP[1,i],Budget,stepsize,MaxReach[1,i])
+curvetemp <- CreateSRCurveValues(Parameters[1,i],Parameters[2,i],Parameters[3,i],CPP[1,i],Budget,stepsize,MaxReach[i])
 
 curves <- cbind(curves,curvetemp)
 
