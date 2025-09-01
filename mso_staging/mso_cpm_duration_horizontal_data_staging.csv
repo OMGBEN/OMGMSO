@@ -15,6 +15,7 @@ YouTube TrueView,P25-54,YouTube TrueViewP25-54,14.92,14.92,14.92
 YouTube Instant Reserve,P25-54,YouTube Instant ReserveP25-54,16.64,14.78,14.78
 YouTube Select,P25-54,YouTube SelectP25-54,40.74,31.02,31.02
 YouTube OMG Select,P25-54,YouTube OMG SelectP25-54,27.7,27.7,27.7
+YouTube OMG Line Ups,P25-54,YouTube OMG Line UpsP25-54,22.63,22.63,22.63
 Nine Now,P25-54,Nine NowP25-54,39,28,28
 Ten Play,P25-54,Ten PlayP25-54,34,28,28
 Seven Plus,P25-54,Seven PlusP25-54,44,31,31
@@ -42,6 +43,7 @@ YouTube TrueView,P18-44,YouTube TrueViewP18-44,15.11,15.11,15.11
 YouTube Instant Reserve,P18-44,YouTube Instant ReserveP18-44,16.66,14.79,14.79
 YouTube Select,P18-44,YouTube SelectP18-44,36.07,32.63,32.63
 YouTube OMG Select,P18-44,YouTube OMG SelectP18-44,29.75,29.75,29.75
+YouTube OMG Line Ups,P18-44,YouTube OMG Line UpsP18-44,22.73,22.73,22.73
 Nine Now,P18-44,Nine NowP18-44,39,28,28
 Ten Play,P18-44,Ten PlayP18-44,34,28,28
 Seven Plus,P18-44,Seven PlusP18-44,44,31,31
@@ -69,6 +71,7 @@ YouTube TrueView,P18+,YouTube TrueViewP18+,12.76,12.76,12.76
 YouTube Instant Reserve,P18+,YouTube Instant ReserveP18+,15.58,14.2,14.2
 YouTube Select,P18+,YouTube SelectP18+,41.38,26.56,26.56
 YouTube OMG Select,P18+,YouTube OMG SelectP18+,28.4,28.4,28.4
+YouTube OMG Line Ups,P18+,YouTube OMG Line UpsP18+,17.3,17.3,17.3
 Nine Now,P18+,Nine NowP18+,39,28,28
 Ten Play,P18+,Ten PlayP18+,34,28,28
 Seven Plus,P18+,Seven PlusP18+,44,31,31
@@ -96,6 +99,7 @@ YouTube TrueView,P18-64,YouTube TrueViewP18-64,13.56,13.56,13.56
 YouTube Instant Reserve,P18-64,YouTube Instant ReserveP18-64,15.86,13.73,13.73
 YouTube Select,P18-64,YouTube SelectP18-64,41.93,30.24,30.24
 YouTube OMG Select,P18-64,YouTube OMG SelectP18-64,30.14,30.14,30.14
+YouTube OMG Line Ups,P18-64,YouTube OMG Line UpsP18-64,18.83,18.83,18.83
 Nine Now,P18-64,Nine NowP18-64,39,28,28
 Ten Play,P18-64,Ten PlayP18-64,34,28,28
 Seven Plus,P18-64,Seven PlusP18-64,44,31,31
@@ -115,3 +119,7 @@ ESPN Kayo,P25-54,ESPN KayoP25-54,40,30,30
 ESPN Kayo,P18-44,ESPN KayoP18-44,40,30,30
 ESPN Kayo,P18+,ESPN KayoP18+,40,30,30
 ESPN Kayo,P18-64,ESPN KayoP18-64,40,30,30
+Tubi,P25-54,TubiP25-54,32.5,32.5,32.5
+Tubi,P18-44,TubiP18-44,32.5,32.5,32.5
+Tubi,P18+,TubiP18+,32.5,32.5,32.5
+Tubi,P18-64,TubiP18-64,32.5,32.5,32.5
